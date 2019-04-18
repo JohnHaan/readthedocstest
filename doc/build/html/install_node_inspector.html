@@ -1,0 +1,270 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Install Node Inspector &mdash; node-inspector v1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Prerequisites for Ubuntu" href="environment_prerequisites_ubuntu.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> node-inspector
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="environment_prerequisites.html">Environment Prerequisites</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Install Node Inspector</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#inspector-flow">inspector flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#architecture">Architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#install-node-inspector-package">Install Node Inspector Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configure-node-inspector">Configure Node Inspector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#schedule-node-inspection">Schedule Node Inspection</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">node-inspector</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Install Node Inspector</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/install_node_inspector.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="install-node-inspector">
+<h1>Install Node Inspector<a class="headerlink" href="#install-node-inspector" title="Permalink to this headline">¶</a></h1>
+<p>Node Inspector 서비스는 ironic standalone의 노드 정보를 수집하는 inspector 기능을 보완하기 위해 개발되었습니다.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="inspector-flow">
+<h3>inspector flow<a class="headerlink" href="#inspector-flow" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>ironic API를 통하여 node의 정보를 가져옵니다.</li>
+<li>node들의 agent_url 정보를 통하여 각 node의 ip 정보를 얻습니다.</li>
+<li>remote ssh를 통해 각 노드들의 cpu, memory, network, disk 정보를 수집합니다.</li>
+<li>각 노드의 수집된 정보는 특정 디렉토리에 json 파일로 저장됩니다.</li>
+</ol>
+</div>
+<div class="section" id="architecture">
+<h3>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h3>
+<p>Overall Architecture</p>
+<img alt="_images/node_inspector.png" src="_images/node_inspector.png" />
+</div>
+</div>
+<div class="section" id="install-node-inspector-package">
+<h2>Install Node Inspector Package<a class="headerlink" href="#install-node-inspector-package" title="Permalink to this headline">¶</a></h2>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ tar zxvf node-inspector-{version}.tar.gz
+$ cd node-inspector
+$ pip install -r requirements.txt
+$ python setup.py install
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-node-inspector">
+<h2>Configure Node Inspector<a class="headerlink" href="#configure-node-inspector" title="Permalink to this headline">¶</a></h2>
+<p>node_inspector.conf 의 파일을 열어 환경에 맞게 설정을 합니다.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ cp etc/node_inspector.conf.sample /etc/node_inspector/node_inspector.conf
+$ vi /etc/node_inspector/node_inspector.conf
+</pre></div>
+</div>
+</div>
+<div class="section" id="schedule-node-inspection">
+<h2>Schedule Node Inspection<a class="headerlink" href="#schedule-node-inspection" title="Permalink to this headline">¶</a></h2>
+<p>introspection job을 수행할 시간을 crontab을 통해 등록합니다.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ vi /etc/crontab
+   */5   *    *    *    *    root /usr/local/bin/node_inspector
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="environment_prerequisites_ubuntu.html" class="btn btn-neutral" title="Prerequisites for Ubuntu" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, John Haan
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
